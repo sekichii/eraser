@@ -1,0 +1,38 @@
+name: Eraser Data Deletion
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  remove-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Run Eraser
+        env:
+          ERASER_FIRST_NAME: ${{ secrets.ERASER_FIRST_NAME }}
+          ERASER_LAST_NAME: ${{ secrets.ERASER_LAST_NAME }}
+          ERASER_EMAIL: ${{ secrets.ERASER_EMAIL }}
+          ERASER_EMAIL_PROVIDER: ${{ secrets.ERASER_EMAIL_PROVIDER }}
+          ERASER_TEMPLATE: ${{ secrets.ERASER_TEMPLATE }}
+          ERASER_SMTP_HOST: ${{ secrets.ERASER_SMTP_HOST }}
+          ERASER_SMTP_PORT: ${{ secrets.ERASER_SMTP_PORT }}
+          ERASER_SMTP_USERNAME: ${{ secrets.ERASER_SMTP_USERNAME }}
+          ERASER_SMTP_PASSWORD: ${{ secrets.ERASER_SMTP_PASSWORD }}
+          ERASER_ADDRESS: ${{ secrets.ERASER_ADDRESS }}
+          ERASER_CITY: ${{ secrets.ERASER_CITY }}
+          ERASER_STATE: ${{ secrets.ERASER_STATE }}
+          ERASER_ZIP_CODE: ${{ secrets.ERASER_ZIP_CODE }}
+          ERASER_COUNTRY: ${{ secrets.ERASER_COUNTRY }}
+          ERASER_PHONE: ${{ secrets.ERASER_PHONE }}
+        run: |
+          go run cmd/eraser/main.go
