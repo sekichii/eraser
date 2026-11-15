@@ -35,4 +35,4 @@ jobs:
           ERASER_COUNTRY: ${{ secrets.ERASER_COUNTRY }}
           ERASER_PHONE: ${{ secrets.ERASER_PHONE }}
         run: |
-          go run cmd/eraser/main.go
+          go run cmd/eraser/main.go send
